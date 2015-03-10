@@ -1,0 +1,14 @@
+{
+  "name": "@spm/sf-attachment-mover",
+  "version": "1.0.5",
+  "description": "Used to insert Attachments into Salesforce",
+  "repository": {
+    "url": "",
+    "type": "git"
+  },
+  "dependencies": {
+    "fast-csv": "^0.5.7",
+    "inquirer": "^0.8.0",
+    "soap": "^0.8.0"
+  }
+}
