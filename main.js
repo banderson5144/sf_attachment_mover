@@ -3,9 +3,12 @@ var soap = require('soap'); //Create Webservice from WSDL
 var fs = require('fs'); //Read Local files
 var inquirer = require('inquirer'); //Asks questions
 var csv = require('fast-csv'); //Parse CSV File
+var AdmZip = require('adm-zip');
+var JSZip = require("jszip");
 var qFile = require('./questions.js')
 
 var url = 'partner.xml'; //Partner WSDL from Salesforce
+var sfSoapClient;
 
 var prodBoxUrl = 'https://login.salesforce.com/services/Soap/u/32.0';
 var sandBoxUrl = 'https://test.salesforce.com/services/Soap/u/32.0';
@@ -32,6 +35,9 @@ var trgtClient;
 var trgtExtObjLkup = '';
 var trgtExtFldLkup = '';
 
+//Export Query String
+var expQryStr = '';
+
 /* Variables for org to org attachment migration
  * We store the QueryResult()
  * http://www.salesforce.com/developer/docs/api/Content/sforce_api_calls_querymore_queryresult.htm#topic-title
@@ -45,6 +51,8 @@ var qryMoreId = ''; //queryLocator
 var recSet = []; //Variable to hold a recordSet. Whether its from a csv File, or a query API call
 var curRecSet = []; //Variable that holds a subset of attachment records to sent to Target Salesforce Org
 var fileObj = {}; //Variable to store Ids and file Names to insert to Salesforce
+
+var zipFileName = 'sfExp_' + process.hrtime()[1] + '.zip';
 
 /*
   Header Row for result file
@@ -63,11 +71,11 @@ fs.writeFile('results.csv',hRow,function(err){
     trgtPassword = a.trgtpw;
     trgtLoginUrl = a.trgtEnv == 'Production' ? prodBoxUrl : sandBoxUrl;
 
-    howToInsert();
+    operationType();
   });
 });
 
-function howToInsert()
+function operationType()
 {
   console.log('\n');
 
@@ -77,10 +85,13 @@ function howToInsert()
 
     if(opType == 'query')
     {
-      queryOrg();
-    }else
+      srcOrg();
+    }else if(opType == 'csv')
     {
       loadCSV();
+    }else
+    {
+      setExpQryStr();
     }
   });
 }
@@ -121,7 +132,16 @@ function loadCSV()
     });
 }
 
-function queryOrg()
+function setExpQryStr()
+{
+  inquirer.prompt(qFile.eQs,function(a){
+    expQryStr = a.attQry;
+
+    loginTrgt();
+  });
+}
+
+function srcOrg()
 {
   console.log('\n');
 
@@ -135,6 +155,15 @@ function queryOrg()
     trgtExtFldLkup = a.extIdFld;
 
     loginTrgt();
+  });
+}
+
+function createSFClient()
+{
+  soap.createClient(url,
+  function(err, client)
+  {
+
   });
 }
 
@@ -164,19 +193,25 @@ function loginTrgt()
         trgtSessionId = r.result.sessionId;
       }
 
+      client.clearSoapHeaders();
+    	client.setEndpoint(trgtServerUrl);
+    	client.addSoapHeader({SessionHeader:{sessionId:trgtSessionId}},'','tns');
+
       trgtClient = client;
 
       if(opType == 'query')
       {
         loginSrc(trgtClient);
-      }else
+      }else if(opType == 'csv')
       {
         retAttFromDisk();
+      }else
+      {
+        queryOrg(trgtClient,expQryStr);
       }
     })
   });
 }
-
 
 function loginSrc(client)
 {
@@ -202,9 +237,13 @@ function loginSrc(client)
   	    srcServerUrl = r.result.serverUrl;
   	    srcSessionId = r.result.sessionId;
 
+        client.clearSoapHeaders();
+      	client.setEndpoint(srcServerUrl);
+      	client.addSoapHeader({SessionHeader:{sessionId:srcSessionId}},'','tns');
+
         srcClient = client;
 
-        querySrcOrg(srcClient,buildOrgQry());
+        queryOrg(srcClient,buildOrgQry());
       }
     }
   );
@@ -218,11 +257,11 @@ function buildOrgQry()
   return qryString;
 }
 
-function querySrcOrg(client,queryString)
+function queryOrg(client,queryString)
 {
-	client.clearSoapHeaders();
-	client.setEndpoint(srcServerUrl);
-	client.addSoapHeader({SessionHeader:{sessionId:srcSessionId}},'','tns');
+	//client.clearSoapHeaders();
+	//client.setEndpoint(srcServerUrl);
+	//client.addSoapHeader({SessionHeader:{sessionId:srcSessionId}},'','tns');
 
 	console.log('\nQuery Attachemnt Ids from Src Org');
 
@@ -253,8 +292,13 @@ function querySrcOrg(client,queryString)
   			recSet.pop();
   		}
 
-
-  		retAttFromSrc(srcClient,curRecSet);
+      if(opType == 'export')
+      {
+        retAttFromSF(trgtClient,curRecSet);
+      }else
+      {
+		    retAttFromSF(srcClient,curRecSet);
+      }
     }else
     {
       console.log('No Attachments to move');
@@ -263,11 +307,11 @@ function querySrcOrg(client,queryString)
 	});
 }
 
-function qryMoreSrc(client,qryId)
+function qryMoreOrg(client,qryId)
 {
-	client.clearSoapHeaders();
-	client.setEndpoint(srcServerUrl);
-	client.addSoapHeader({SessionHeader:{sessionId:srcSessionId}},'','tns');
+	//client.clearSoapHeaders();
+	//client.setEndpoint(srcServerUrl);
+	//client.addSoapHeader({SessionHeader:{sessionId:srcSessionId}},'','tns');
 
 	console.log('Query More Attachemnt Ids from Src Org');
 
@@ -295,8 +339,13 @@ function qryMoreSrc(client,qryId)
 			recSet.pop();
 		}
 
-
-		retAtt(client,curRecSet);
+    if(opType == 'export')
+    {
+      retAttFromSF(trgtClient,curRecSet);
+    }else
+    {
+      retAttFromSF(srcClient,curRecSet);
+    }
 
 	});
 }
@@ -370,12 +419,12 @@ function retAttFromDisk()
   }
 }
 
-function retAttFromSrc(client,sObjIds)
+function retAttFromSF(client,sObjIds)
 {
-	console.log('\nRetrieving Attachment body from Src Org');
-	client.clearSoapHeaders();
-	client.setEndpoint(srcServerUrl);
-	client.addSoapHeader({SessionHeader:{sessionId:srcSessionId}},'','tns');
+	console.log('\nRetrieving Attachment body from SF');
+	//client.clearSoapHeaders();
+	//client.setEndpoint(srcServerUrl);
+	//client.addSoapHeader({SessionHeader:{sessionId:srcSessionId}},'','tns');
 
 	var retArgs = {};
 	retArgs.fieldList = 'Id,Name,ParentId,Body,ContentType';
@@ -399,7 +448,7 @@ function retAttFromSrc(client,sObjIds)
 			flds.ContentType = attRes.ContentType;
 			flds.Name = attRes.Name;
 
-      if(trgtExtFldLkup.toLowerCase() != 'id')
+      if(trgtExtFldLkup.toLowerCase() != 'id' && trgtExtFldLkup.toLowerCase() != '')
       {
         var objLkup = {};
         objLkup['type'] = trgtExtObjLkup;
@@ -415,8 +464,56 @@ function retAttFromSrc(client,sObjIds)
 		}
 
 		myAtt.sObject = recs;
-		createAttInTrgt(client,myAtt);
+
+    if(opType == 'export')
+    {
+      writeToDisk(myAtt);
+    }else
+    {
+	    createAttInTrgt(trgtClient,myAtt);
+    }
 	});
+}
+
+function writeToDisk(recs)
+{
+  var attFiles = recs.sObject;
+
+  //var zip = new AdmZip();
+  fs.readFile(zipFileName, function(err, data) {
+    if(err)
+    {
+      var zip = new JSZip();
+      processZip(zip,attFiles);
+    }else
+    {
+      var zip = new JSZip(data);
+      processZip(zip,attFiles);
+    }
+  });
+}
+
+function processZip(zipFile,attFiles)
+{
+  for(i=0;i<attFiles.length;i++)
+  {
+    var strTime = process.hrtime();
+    var rand = strTime[1];
+
+    //console.log(attFiles[i].Body);
+    zipFile.file(attFiles[i].ParentId + '-' + rand + '_' + attFiles[i].Name, new Buffer(attFiles[i].Body,'base64'));
+  }
+
+  var buffer = zipFile.generate({type:"nodebuffer"});
+
+  fs.writeFile(zipFileName, buffer, function(err) {
+    if(err)
+    {
+      throw err;
+    }
+
+    processQryMore();
+  });
 }
 
 function processResult(res)
@@ -475,10 +572,25 @@ function processQryMore()
       curRecSet.push(recSet[recSet.length-1]);
       recSet.pop();
     }
-    retAttFromSrc(srcClient,curRecSet);
+
+    if(opType == 'export')
+    {
+      retAttFromSF(trgtClient,curRecSet);
+    }else
+    {
+      retAttFromSF(srcClient,curRecSet);
+    }
   }else if(!qryMore)
   {
-    qryMoreSrc(srcClient,qryMoreId);
+    if(opType == 'export')
+    {
+      //retAttFromSF(trgtClient,curRecSet);
+      qryMoreOrg(trgtClient,qryMoreId);
+    }else
+    {
+      //retAttFromSF(srcClient,curRecSet);
+      qryMoreOrg(srcClient,qryMoreId);
+    }
   }else
   {
     console.log('All done');
@@ -487,9 +599,9 @@ function processQryMore()
 
 function createAttInTrgt(client,recs)
 {
-	client.clearSoapHeaders();
-	client.setEndpoint(trgtServerUrl);
-	client.addSoapHeader({SessionHeader:{sessionId:trgtSessionId}},'','tns');
+	//client.clearSoapHeaders();
+	//client.setEndpoint(trgtServerUrl);
+	//client.addSoapHeader({SessionHeader:{sessionId:trgtSessionId}},'','tns');
 	console.log('\nInserting Attacments');
 
 	client.SforceService.Soap.create(recs,

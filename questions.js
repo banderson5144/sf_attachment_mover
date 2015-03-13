@@ -1,10 +1,8 @@
-//var module = require("module");
-
 var trgtQs = [
   {
     type:"list",
     name:"trgtEnv",
-    message: "What environment are you inserting to:",
+    message: "What is your target environment:",
     choices: ['Production','Sandbox']
   },
   {
@@ -25,19 +23,33 @@ var insQs = [
   {
     type:"list",
     name:"insertType",
-    message: "How will you be inserting attachments",
+    message: "What operation do you want to perform?",
     choices: [
       {
         //key: "y",
-        name: "Local CSV File",
+        name: "Import Local CSV File",
         value: "csv"
       },
       {
         //key: "a",
-        name: "Org Migration",
+        name: "Perform Org Migration",
         value: "query"
+      },
+      {
+        //key: "a",
+        name: "Export Files from SF",
+        value: "export"
       }
     ]
+  }
+];
+
+var expQs = [
+  {
+    type: "input",
+    name: "attQry",
+    message: "Specify attachment query",
+    default: "Select Id From Attachment LIMIT 10"
   }
 ];
 
@@ -76,3 +88,4 @@ var srcQs = [
 exports.tQs = trgtQs;
 exports.iQs = insQs;
 exports.sQs = srcQs;
+exports.eQs = expQs;
