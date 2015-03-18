@@ -1,7 +1,7 @@
 {
   "name": "@spm/sf-attachment-mover",
   "version": "1.0.6",
-  "description": "Used to insert Attachments into Salesforce",
+  "description": "A Dataloader tool for Attachments in Salesforce",
   "repository": {
     "url": "",
     "type": "git"
