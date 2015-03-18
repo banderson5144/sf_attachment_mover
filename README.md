@@ -34,9 +34,7 @@ You will have to modify the upload.csv file to meet your specifications and stor
 sfAttMover
 |
 +-- attFiles
-
 |	\--test.html
-
 +-- upload.csv
 
 ###Export Attachments
