@@ -3,8 +3,8 @@ var soap = require('soap'); //Create Webservice from WSDL
 var fs = require('fs'); //Read Local files
 var inquirer = require('inquirer'); //Asks questions
 var csv = require('fast-csv'); //Parse CSV File
-var AdmZip = require('adm-zip');
-var JSZip = require("jszip");
+var JSZip = require("jszip"); //Create Zip Files
+
 var qFile = require('./questions.js')
 
 var url = 'partner.xml'; //Partner WSDL from Salesforce
@@ -71,7 +71,7 @@ fs.writeFile('results.csv',hRow,function(err){
     trgtPassword = a.trgtpw;
     trgtLoginUrl = a.trgtEnv == 'Production' ? prodBoxUrl : sandBoxUrl;
 
-    operationType();
+    createSFClient();
   });
 });
 
@@ -163,54 +163,52 @@ function createSFClient()
   soap.createClient(url,
   function(err, client)
   {
-
+    sfSoapClient = client;
+    operationType();
   });
 }
 
 function loginTrgt()
 {
   console.log('\nLogging into Target Org...');
-  soap.createClient(url,
-  function(err, client)
-  {
-    client.setEndpoint(trgtLoginUrl);
 
-    client.SforceService.Soap.login(
+  sfSoapClient.setEndpoint(trgtLoginUrl);
+
+  sfSoapClient.SforceService.Soap.login(
+  {
+    username:trgtUsername,
+    password:trgtPassword
+  },
+  function(err, r)
+  {
+    if(err != null)
     {
-      username:trgtUsername,
-      password:trgtPassword
-    },
-    function(err, r)
+      var errMsg = err.root.Envelope.Body.Fault.faultstring;
+      console.log(errMsg);
+    }else
     {
-      if(err != null)
-      {
-        var errMsg = err.root.Envelope.Body.Fault.faultstring;
-        console.log(errMsg);
-      }else
-      {
         console.log('Success');
         trgtServerUrl = r.result.serverUrl;
         trgtSessionId = r.result.sessionId;
-      }
+    }
 
-      client.clearSoapHeaders();
-    	client.setEndpoint(trgtServerUrl);
-    	client.addSoapHeader({SessionHeader:{sessionId:trgtSessionId}},'','tns');
+    sfSoapClient.clearSoapHeaders();
+    sfSoapClient.setEndpoint(trgtServerUrl);
+    sfSoapClient.addSoapHeader({SessionHeader:{sessionId:trgtSessionId}},'','tns');
 
-      trgtClient = client;
+    trgtClient = sfSoapClient;
 
-      if(opType == 'query')
-      {
-        loginSrc(trgtClient);
-      }else if(opType == 'csv')
-      {
-        retAttFromDisk();
-      }else
-      {
-        queryOrg(trgtClient,expQryStr);
-      }
-    })
-  });
+    if(opType == 'query')
+    {
+      loginSrc(trgtClient);
+    }else if(opType == 'csv')
+    {
+      retAttFromDisk();
+    }else
+    {
+      queryOrg(trgtClient,expQryStr);
+    }
+  })
 }
 
 function loginSrc(client)
@@ -259,9 +257,6 @@ function buildOrgQry()
 
 function queryOrg(client,queryString)
 {
-	//client.clearSoapHeaders();
-	//client.setEndpoint(srcServerUrl);
-	//client.addSoapHeader({SessionHeader:{sessionId:srcSessionId}},'','tns');
 
 	console.log('\nQuery Attachemnt Ids from Src Org');
 
@@ -269,7 +264,6 @@ function queryOrg(client,queryString)
 	function(err,res)
 	{
 		var sObjIds = [];
-		//console.log(res.result.records);
 
     if(res.result.records != null)
     {
@@ -309,16 +303,11 @@ function queryOrg(client,queryString)
 
 function qryMoreOrg(client,qryId)
 {
-	//client.clearSoapHeaders();
-	//client.setEndpoint(srcServerUrl);
-	//client.addSoapHeader({SessionHeader:{sessionId:srcSessionId}},'','tns');
-
 	console.log('Query More Attachemnt Ids from Src Org');
 
 	client.SforceService.Soap.queryMore({queryLocator:qryId},
 	function(err,res)
 	{
-		//console.log(client.lastRequest);
 		var sObjIds = [];
 
 		for(var i=0;i<res.result.records.length;i++)
@@ -422,9 +411,6 @@ function retAttFromDisk()
 function retAttFromSF(client,sObjIds)
 {
 	console.log('\nRetrieving Attachment body from SF');
-	//client.clearSoapHeaders();
-	//client.setEndpoint(srcServerUrl);
-	//client.addSoapHeader({SessionHeader:{sessionId:srcSessionId}},'','tns');
 
 	var retArgs = {};
 	retArgs.fieldList = 'Id,Name,ParentId,Body,ContentType';
@@ -438,7 +424,6 @@ function retAttFromSF(client,sObjIds)
 
 		for(i=0;i<res.result.length;i++)
 		{
-			//console.log('im in');
 			var myAtt = {};
 			var flds = {};
       var attRes = res.result[i];
@@ -479,7 +464,6 @@ function writeToDisk(recs)
 {
   var attFiles = recs.sObject;
 
-  //var zip = new AdmZip();
   fs.readFile(zipFileName, function(err, data) {
     if(err)
     {
@@ -599,9 +583,6 @@ function processQryMore()
 
 function createAttInTrgt(client,recs)
 {
-	//client.clearSoapHeaders();
-	//client.setEndpoint(trgtServerUrl);
-	//client.addSoapHeader({SessionHeader:{sessionId:trgtSessionId}},'','tns');
 	console.log('\nInserting Attacments');
 
 	client.SforceService.Soap.create(recs,
