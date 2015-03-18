@@ -32,9 +32,7 @@ However, if you don't have the Salesforce Id accessible, you can also specify an
 You will have to modify the upload.csv file to meet your specifications and store your attachment files in the attFiles folder:
 
 sfAttMover
-
 |
-
 +-- attFiles
 
 |	\--test.html
