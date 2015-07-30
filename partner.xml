@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-Salesforce.com Partner Web Services API Version 32.0
-Generated on 2014-12-19 14:49:11 +0000.
+Salesforce.com Partner Web Services API Version 34.0
+Generated on 2015-07-30 14:25:02 +0000.
 
-Copyright 1999-2014 salesforce.com, inc.
+Copyright 1999-2015 salesforce.com, inc.
 All Rights Reserved
 -->
 
@@ -94,7 +94,7 @@ All Rights Reserved
                         <element name="queryId" type="xsd:string" nillable="false" minOccurs="1" maxOccurs="1"/>
                     
                     <element name="searchRecords" minOccurs="0" maxOccurs="unbounded" type="tns:SearchRecord"/>
-                    <element name="sforceReserved" minOccurs="0" maxOccurs="1" type="xsd:string"/>
+                    
                 </sequence>
             </complexType>
 
@@ -112,6 +112,13 @@ All Rights Reserved
                 </sequence>
             </complexType>
 
+
+            <complexType name="RelationshipReferenceTo">
+                <sequence>
+                    <element name="referenceTo" minOccurs="0" maxOccurs="unbounded" type="xsd:string"/>
+                </sequence>
+            </complexType>
+
             <!-- Common name-value pair -->
             <complexType name="NameValuePair">
                 <sequence>
@@ -125,7 +132,7 @@ All Rights Reserved
                 <sequence>
                     <element name="ids" minOccurs="0" maxOccurs="unbounded" type="tns:ID"/>
                     <element name="latestDateCovered" type="xsd:dateTime"/>
-                    <element name="sforceReserved" minOccurs="0" maxOccurs="1" type="xsd:string"/>
+                    
                 </sequence>
             </complexType>
 
@@ -135,7 +142,7 @@ All Rights Reserved
                     <element name="deletedRecords" minOccurs="0" maxOccurs="unbounded" type="tns:DeletedRecord"/>
                     <element name="earliestDateAvailable" type="xsd:dateTime"/>
                     <element name="latestDateCovered" type="xsd:dateTime"/>
-                    <element name="sforceReserved" minOccurs="0" maxOccurs="1" type="xsd:string"/>
+                    
                 </sequence>
             </complexType>
 
@@ -217,6 +224,7 @@ All Rights Reserved
                     <enumeration value="ALL_OR_NONE_OPERATION_ROLLED_BACK"/>
                     <enumeration value="ALREADY_IN_PROCESS"/>
                     <enumeration value="ASSIGNEE_TYPE_REQUIRED"/>
+                    <enumeration value="AURA_COMPILE_ERROR"/>
                     <enumeration value="BAD_CUSTOM_ENTITY_PARENT_DOMAIN"/>
                     <enumeration value="BCC_NOT_ALLOWED_IF_BCC_COMPLIANCE_ENABLED"/>
                     <enumeration value="CANNOT_CASCADE_PRODUCT_ACTIVE"/>
@@ -245,8 +253,11 @@ All Rights Reserved
                     <enumeration value="CANT_UNSET_CORP_CURRENCY"/>
                     <enumeration value="CHILD_SHARE_FAILS_PARENT"/>
                     <enumeration value="CIRCULAR_DEPENDENCY"/>
+                    <enumeration value="CLEAN_SERVICE_ERROR"/>
                     <enumeration value="COLLISION_DETECTED"/>
                     <enumeration value="COMMUNITY_NOT_ACCESSIBLE"/>
+                    <enumeration value="CONFLICTING_ENVIRONMENT_HUB_MEMBER"/>
+                    <enumeration value="CONFLICTING_SSO_USER_MAPPING"/>
                     <enumeration value="CUSTOM_APEX_ERROR"/>
                     <enumeration value="CUSTOM_CLOB_FIELD_LIMIT_EXCEEDED"/>
                     <enumeration value="CUSTOM_ENTITY_OR_FIELD_LIMIT"/>
@@ -254,7 +265,11 @@ All Rights Reserved
                     <enumeration value="CUSTOM_INDEX_EXISTS"/>
                     <enumeration value="CUSTOM_LINK_LIMIT_EXCEEDED"/>
                     <enumeration value="CUSTOM_METADATA_LIMIT_EXCEEDED"/>
+                    <enumeration value="CUSTOM_SETTINGS_LIMIT_EXCEEDED"/>
                     <enumeration value="CUSTOM_TAB_LIMIT_EXCEEDED"/>
+                    <enumeration value="DATACLOUDADDRESS_NO_RECORDS_FOUND"/>
+                    <enumeration value="DATACLOUDADDRESS_PROCESSING_ERROR"/>
+                    <enumeration value="DATACLOUDADDRESS_SERVER_ERROR"/>
                     <enumeration value="DELETE_FAILED"/>
                     <enumeration value="DELETE_OPERATION_TOO_LARGE"/>
                     <enumeration value="DELETE_REQUIRED_ON_CASCADE"/>
@@ -276,6 +291,8 @@ All Rights Reserved
                     <enumeration value="ENTITY_IS_ARCHIVED"/>
                     <enumeration value="ENTITY_IS_DELETED"/>
                     <enumeration value="ENTITY_IS_LOCKED"/>
+                    <enumeration value="ENTITY_SAVE_ERROR"/>
+                    <enumeration value="ENTITY_SAVE_VALIDATION_ERROR"/>
                     <enumeration value="ENVIRONMENT_HUB_MEMBERSHIP_CONFLICT"/>
                     <enumeration value="ENVIRONMENT_HUB_MEMBERSHIP_ERROR_JOINING_HUB"/>
                     <enumeration value="ENVIRONMENT_HUB_MEMBERSHIP_USER_ALREADY_IN_HUB"/>
@@ -285,11 +302,13 @@ All Rights Reserved
                     <enumeration value="FIELD_CUSTOM_VALIDATION_EXCEPTION"/>
                     <enumeration value="FIELD_FILTER_VALIDATION_EXCEPTION"/>
                     <enumeration value="FIELD_INTEGRITY_EXCEPTION"/>
+                    <enumeration value="FIELD_NOT_UPDATABLE"/>
                     <enumeration value="FILTERED_LOOKUP_LIMIT_EXCEEDED"/>
                     <enumeration value="FIND_DUPLICATES_ERROR"/>
                     <enumeration value="HTML_FILE_UPLOAD_NOT_ALLOWED"/>
                     <enumeration value="IMAGE_TOO_LARGE"/>
                     <enumeration value="INACTIVE_OWNER_OR_USER"/>
+                    <enumeration value="INACTIVE_RULE_ERROR"/>
                     <enumeration value="INSERT_UPDATE_DELETE_NOT_ALLOWED_DURING_MAINTENANCE"/>
                     <enumeration value="INSUFFICIENT_ACCESS_ON_CROSS_REFERENCE_ENTITY"/>
                     <enumeration value="INSUFFICIENT_ACCESS_OR_READONLY"/>
@@ -312,7 +331,8 @@ All Rights Reserved
                     <enumeration value="INVALID_EMPTY_KEY_OWNER"/>
                     <enumeration value="INVALID_ENTITY_FOR_MATCH_ENGINE_ERROR"/>
                     <enumeration value="INVALID_ENTITY_FOR_MATCH_OPERATION_ERROR"/>
-                    <enumeration value="INVALID_EVENT_SUBSCRIPTION"/>
+                    <enumeration value="INVALID_ENVIRONMENT_HUB_MEMBER"/>
+                    <enumeration value="INVALID_EVENT_PUBLICATION"/>
                     <enumeration value="INVALID_FIELD"/>
                     <enumeration value="INVALID_FIELD_FOR_INSERT_UPDATE"/>
                     <enumeration value="INVALID_FIELD_WHEN_USING_TEMPLATE"/>
@@ -335,6 +355,7 @@ All Rights Reserved
                     <enumeration value="INVALID_PERSON_ACCOUNT_OPERATION"/>
                     <enumeration value="INVALID_QUERY_LOCATOR"/>
                     <enumeration value="INVALID_READ_ONLY_USER_DML"/>
+                    <enumeration value="INVALID_RUNTIME_VALUE"/>
                     <enumeration value="INVALID_SAVE_AS_ACTIVITY_FLAG"/>
                     <enumeration value="INVALID_SESSION_ID"/>
                     <enumeration value="INVALID_SETUP_OWNER"/>
@@ -350,7 +371,6 @@ All Rights Reserved
                     <enumeration value="INVALID_USERID"/>
                     <enumeration value="IP_RANGE_LIMIT_EXCEEDED"/>
                     <enumeration value="JIGSAW_IMPORT_LIMIT_EXCEEDED"/>
-                    <enumeration value="KEY_HAS_BEEN_DESTROYED"/>
                     <enumeration value="LICENSE_LIMIT_EXCEEDED"/>
                     <enumeration value="LIGHT_PORTAL_USER_EXCEPTION"/>
                     <enumeration value="LIMIT_EXCEEDED"/>
@@ -369,6 +389,8 @@ All Rights Reserved
                     <enumeration value="MATCH_OPERATION_UNKNOWN_RULE_ERROR"/>
                     <enumeration value="MATCH_OPERATION_UNSUPPORTED_VERSION_ERROR"/>
                     <enumeration value="MATCH_RUNTIME_ERROR"/>
+                    <enumeration value="MATCH_SERVICE_ERROR"/>
+                    <enumeration value="MATCH_SERVICE_TIMED_OUT"/>
                     <enumeration value="MATCH_SERVICE_UNAVAILABLE_ERROR"/>
                     <enumeration value="MAXIMUM_CCEMAILS_EXCEEDED"/>
                     <enumeration value="MAXIMUM_DASHBOARD_COMPONENTS_EXCEEDED"/>
@@ -386,6 +408,7 @@ All Rights Reserved
                     <enumeration value="MAX_TM_RULE_ITEMS_EXCEEDED"/>
                     <enumeration value="MERGE_FAILED"/>
                     <enumeration value="MISSING_ARGUMENT"/>
+                    <enumeration value="MISSING_RECORD"/>
                     <enumeration value="MIXED_DML_OPERATION"/>
                     <enumeration value="NONUNIQUE_SHIPPING_ADDRESS"/>
                     <enumeration value="NO_APPLICABLE_PROCESS"/>
@@ -400,6 +423,20 @@ All Rights Reserved
                     <enumeration value="PACKAGE_LICENSE_REQUIRED"/>
                     <enumeration value="PACKAGING_API_INSTALL_FAILED"/>
                     <enumeration value="PACKAGING_API_UNINSTALL_FAILED"/>
+                    <enumeration value="PALI_INVALID_ACTION_ID"/>
+                    <enumeration value="PALI_INVALID_ACTION_NAME"/>
+                    <enumeration value="PALI_INVALID_ACTION_TYPE"/>
+                    <enumeration value="PAL_INVALID_ENTITY_ID"/>
+                    <enumeration value="PAL_INVALID_FLEXIPAGE_ID"/>
+                    <enumeration value="PAL_INVALID_LAYOUT_ID"/>
+                    <enumeration value="PAL_INVALID_PARAMETERS"/>
+                    <enumeration value="PA_API_EXCEPTION"/>
+                    <enumeration value="PA_AXIS_FAULT"/>
+                    <enumeration value="PA_INVALID_ID_EXCEPTION"/>
+                    <enumeration value="PA_NO_ACCESS_EXCEPTION"/>
+                    <enumeration value="PA_NO_DATA_FOUND_EXCEPTION"/>
+                    <enumeration value="PA_URI_SYNTAX_EXCEPTION"/>
+                    <enumeration value="PA_VISIBLE_ACTIONS_FILTER_ORDERING_EXCEPTION"/>
                     <enumeration value="PORTAL_NO_ACCESS"/>
                     <enumeration value="PORTAL_USER_ALREADY_EXISTS_FOR_CONTACT"/>
                     <enumeration value="PRIVATE_CONTACT_ON_ASSET"/>
@@ -439,6 +476,7 @@ All Rights Reserved
                     <enumeration value="WEBLINK_SIZE_LIMIT_EXCEEDED"/>
                     <enumeration value="WEBLINK_URL_INVALID"/>
                     <enumeration value="WRONG_CONTROLLER_TYPE"/>
+                    <enumeration value="XCLEAN_UNEXPECTED_ERROR"/>
                 </restriction>
             </simpleType>
 
@@ -569,6 +607,7 @@ All Rights Reserved
             <complexType name="DescribeQuickActionResult">
                 <sequence>
                     <element name="accessLevelRequired"    type="tns:ShareAccessLevel" nillable="true"/> 
+                    <element name="canvasApplicationId"    type="tns:ID" nillable="true"/>                    
                     <element name="canvasApplicationName"    type="xsd:string" nillable="true"/>
                     <element name="colors" type="tns:DescribeColor" minOccurs="0" maxOccurs="unbounded"/> 
                     <element name="contextSobjectType"    type="xsd:string" nillable="true"/> 
@@ -578,7 +617,7 @@ All Rights Reserved
                     <element name="iconUrl"       type="xsd:string" nillable="true"/>
                     <element name="icons"            type="tns:DescribeIcon" minOccurs="0" maxOccurs="unbounded"/>
                     <element name="label"        type="xsd:string"/>
-                    <element name="layout"          type="tns:DescribeLayoutSection" minOccurs="0" maxOccurs="unbounded"/>
+                    <element name="layout"          type="tns:DescribeLayoutSection" nillable="true"/>
                     <element name="miniIconUrl"      type="xsd:string" nillable="true"/>
                     <element name="name"         type="xsd:string"/>
                                         <element name="targetParentField"    type="xsd:string" nillable="true"/>
@@ -742,6 +781,8 @@ All Rights Reserved
                     <element name="childSObject"     type="xsd:string"/>
                     <element name="deprecatedAndHidden" type="xsd:boolean"/>
                     <element name="field"            type="xsd:string"/>
+                    <element name="junctionIdListName"  type="xsd:string" minOccurs="0"/>
+                    <element name="junctionReferenceTo" type="xsd:string" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
                     <element name="relationshipName" type="xsd:string" minOccurs="0"/>
                     <element name="restrictedDelete" type="xsd:boolean" minOccurs="0"/>
                 </sequence>
@@ -790,6 +831,9 @@ All Rights Reserved
                     <enumeration value="location"/>
                     <enumeration value="address"/>
                     <enumeration value="anyType"/> <!-- can be string, picklist, reference, boolean, currency, int, double, percent, id, date, datetime, url, email -->
+
+                    <enumeration value="complexvalue"/>
+
                 </restriction>
             </simpleType>
 
@@ -807,6 +851,9 @@ All Rights Reserved
                     <enumeration value="urn:location" />
                     <enumeration value="urn:address" />
                     <enumeration value="xsd:anyType"/> <!-- can be id, booolean, double, int, string, date, dateTime -->
+
+                    <enumeration value="urn:RelationshipReferenceTo" />
+
                 </restriction>
             </simpleType>
 
@@ -836,6 +883,7 @@ All Rights Reserved
                     <element name="deprecatedAndHidden"        type="xsd:boolean"/>
                     <element name="digits"                     type="xsd:int"/>
                     <element name="displayLocationInDecimal"   type="xsd:boolean" minOccurs="0"/>
+                    <element name="encrypted"                  type="xsd:boolean" minOccurs="0"/>
                     <element name="externalId"                 type="xsd:boolean" minOccurs="0"/>
                     <element name="extraTypeInfo"              type="xsd:string"  minOccurs="0"/>
                     <element name="filterable"                 type="xsd:boolean"/>
@@ -843,6 +891,7 @@ All Rights Reserved
                     <element name="filteredLookupInfo"			   type="tns:FilteredLookupInfo" nillable="true" minOccurs="0" />
 
                     <element name="groupable"                  type="xsd:boolean"/>
+                    <element name="highScaleNumber"			   type="xsd:boolean" minOccurs="0" />
                     <element name="htmlFormatted"              type="xsd:boolean" minOccurs="0"/>
                     <element name="idLookup"                   type="xsd:boolean"/>
                     <element name="inlineHelpText"             type="xsd:string" minOccurs="0"/>
@@ -936,6 +985,163 @@ All Rights Reserved
             </complexType>
 
 
+            <simpleType name="differenceType">
+                   <restriction base="xsd:string">
+                       <enumeration value="DIFFERENT"/>
+                       <enumeration value="NULL"/>
+                       <enumeration value="SAME"/>
+                       <enumeration value="SIMILAR"/>
+                   </restriction>
+            </simpleType>
+
+            <complexType name="FieldDiff">
+                   <sequence>
+                       <element name="difference" type="tns:differenceType" nillable="false" minOccurs="1" maxOccurs="1"/>
+                       <element name="name" type="xsd:string" />
+                   </sequence>
+            </complexType>
+
+            <complexType name="AdditionalInformationMap">
+                   <sequence>
+                       <element name="name" type="xsd:string" />
+                       <element name="value" type="xsd:string" />
+                   </sequence>
+            </complexType>
+
+            <complexType name="MatchRecord">
+                   <sequence>
+                       <element name="additionalInformation" minOccurs="0" maxOccurs="unbounded" type="tns:AdditionalInformationMap"/>
+                       <element name="fieldDiffs" minOccurs="0" maxOccurs="unbounded" type="tns:FieldDiff"/>
+                       <element name="matchConfidence" type="xsd:double"/>
+                       <element name="record" type="ens:sObject"/>
+                   </sequence>
+            </complexType>
+
+            <complexType name="MatchResult">
+                   <sequence>
+                       <element name="errors"    type="tns:Error" minOccurs="0" maxOccurs="unbounded"/>
+                       <element name="entityType" type="xsd:string" />
+                       <element name="matchEngine" type="xsd:string" />
+                       <element name="matchRecords" minOccurs="0" maxOccurs="unbounded" type="tns:MatchRecord"/>
+                       <element name="rule" type="xsd:string" />
+                       <element name="size" type="xsd:int"/>
+                       <element name="success"   type="xsd:boolean"/>
+                   </sequence>
+            </complexType>
+
+            <complexType name="DuplicateResult">
+                   <sequence>
+                       <element name="allowSave" type="xsd:boolean"/>
+                       <element name="duplicateRule" type="xsd:string"/>
+                       <element name="duplicateRuleEntityType" type="xsd:string"/>
+                       <element name="errorMessage" type="xsd:string"/>
+                       <element name="matchResults" minOccurs="0" maxOccurs="unbounded" type="tns:MatchResult"/>
+                   </sequence>
+            </complexType>
+
+            <complexType name="DuplicateError">
+                <complexContent>
+                    <extension base="tns:Error">
+                        <sequence>
+                          <element name="duplicateResult" type="tns:DuplicateResult"/>
+                        </sequence>
+                    </extension>
+                </complexContent>
+            </complexType>
+
+
+            <complexType name="DescribeNounResult">
+                <sequence>
+ 				    <element name="caseValues" minOccurs="0" maxOccurs="unbounded" type="tns:NameCaseValue"/>
+   		    	    <element name="developerName" type="xsd:string"/>
+                    <element name="gender" nillable="true" type="tns:Gender"/>
+   		    	    <element name="name" type="xsd:string"/>
+   		    	    <element name="pluralAlias" type="xsd:string" nillable="true"/>
+                    <element name="startsWith" nillable="true" type="tns:StartsWith"/>
+                </sequence>
+            </complexType>
+
+		   <complexType name="NameCaseValue">
+    			<sequence>
+				     <element name="article" nillable="true" type="tns:Article"/>
+				     <element name="caseType" nillable="true"  type="tns:CaseType"/>
+				     <element name="number" nillable="true" type="tns:GrammaticalNumber"/>
+				     <element name="possessive" nillable="true"  type="tns:Possessive"/>
+				     <element name="value" type="xsd:string"/>
+			    </sequence>
+		   </complexType>
+
+            <simpleType name="Article">
+                <restriction base="xsd:string">
+                    <enumeration value="None"/>
+                    <enumeration value="Indefinite"/>
+                    <enumeration value="Definite"/>
+                </restriction>
+            </simpleType>
+            <simpleType name="CaseType">
+                <restriction base="xsd:string">
+                    <enumeration value="Nominative"/>
+                    <enumeration value="Accusative"/>
+                    <enumeration value="Genitive"/>
+                    <enumeration value="Dative"/>
+                    <enumeration value="Inessive"/>
+                    <enumeration value="Elative"/>
+                    <enumeration value="Illative"/>
+                    <enumeration value="Adessive"/>
+                    <enumeration value="Ablative"/>
+                    <enumeration value="Allative"/>
+                    <enumeration value="Essive"/>
+                    <enumeration value="Translative"/>
+                    <enumeration value="Partitive"/>
+                    <enumeration value="Objective"/>
+                    <enumeration value="Subjective"/>
+                    <enumeration value="Instrumental"/>
+                    <enumeration value="Prepositional"/>
+                    <enumeration value="Locative"/>
+                    <enumeration value="Vocative"/>
+                    <enumeration value="Sublative"/>
+                    <enumeration value="Superessive"/>
+                    <enumeration value="Delative"/>
+                    <enumeration value="Causalfinal"/>
+                    <enumeration value="Essiveformal"/>
+                    <enumeration value="Termanative"/>
+                    <enumeration value="Distributive"/>
+                    <enumeration value="Ergative"/>
+                    <enumeration value="Adverbial"/>
+                    <enumeration value="Abessive"/>
+                    <enumeration value="Comitative"/>
+                </restriction>
+            </simpleType>
+            <simpleType name="Gender">
+                <restriction base="xsd:string">
+                    <enumeration value="Neuter"/>
+                    <enumeration value="Masculine"/>
+                    <enumeration value="Feminine"/>
+                    <enumeration value="AnimateMasculine"/>
+                </restriction>
+            </simpleType>
+            <simpleType name="GrammaticalNumber">
+                <restriction base="xsd:string">
+                    <enumeration value="Singular"/>
+                    <enumeration value="Plural"/>
+                </restriction>
+            </simpleType>
+            <simpleType name="Possessive">
+                <restriction base="xsd:string">
+                    <enumeration value="None"/>
+                    <enumeration value="First"/>
+                    <enumeration value="Second"/>
+                </restriction>
+            </simpleType>
+            <simpleType name="StartsWith">
+                <restriction base="xsd:string">
+                    <enumeration value="Consonant"/>
+                    <enumeration value="Vowel"/>
+                    <enumeration value="Special"/>
+                </restriction>
+            </simpleType>
+
+
 
 
 
@@ -946,6 +1152,8 @@ All Rights Reserved
                     <element name="name"            type="xsd:string"/>
                     <element name="quickActionList"             type="tns:DescribeQuickActionListResult" minOccurs="0" />
                     <element name="regions"			type="tns:DescribeFlexiPageRegion" minOccurs="0" maxOccurs="unbounded"/>
+                    <element name="sobjectType"     type="xsd:string" minOccurs="0" nillable="true"/>
+                    <element name="template"     type="xsd:string" nillable="true"/>
                     <element name="type"            type="xsd:string"/>
                 </sequence>
             </complexType>
@@ -968,6 +1176,7 @@ All Rights Reserved
             <complexType name="DescribeComponentInstanceProperty">
                 <sequence>
                     <element name="name"   			type="xsd:string"/>
+                    <element name="region"          type="tns:DescribeFlexiPageRegion" nillable="true"/>
                     <element name="value"   		type="xsd:string" nillable="true" />
                 </sequence>
             </complexType>
@@ -1115,6 +1324,9 @@ All Rights Reserved
                     <element name="detailLayoutSections" type="tns:DescribeLayoutSection" minOccurs="0" maxOccurs="unbounded"/>
                     <element name="editLayoutSections"   type="tns:DescribeLayoutSection" minOccurs="0" maxOccurs="unbounded"/>
 
+                    <element name="feedView"                    type="tns:DescribeLayoutFeedView" minOccurs="0" />
+
+
                     <element name="highlightsPanelLayoutSection"  type="tns:DescribeLayoutSection" minOccurs="0" />
 
                     <element name="id"                   type="tns:ID" nillable="true"/>
@@ -1148,6 +1360,28 @@ All Rights Reserved
                     <element name="quickActionName"        type="xsd:string" />
                     <element name="targetSobjectType"    type="xsd:string" nillable="true"/>
                     <element name="type"         type="xsd:string"/>
+                </sequence>
+            </complexType>
+
+
+            <complexType name="DescribeLayoutFeedView">
+                <sequence>
+                    <element name="feedFilters" type="tns:DescribeLayoutFeedFilter" minOccurs="0" maxOccurs="unbounded"/>
+                </sequence>
+            </complexType>
+
+            <simpleType name="FeedLayoutFilterType">
+                <restriction base="xsd:string">
+                    <enumeration value="AllUpdates"/>
+                    <enumeration value="FeedItemType"/>
+                </restriction>
+            </simpleType>
+
+            <complexType name="DescribeLayoutFeedFilter">
+                <sequence>
+                    <element name="label" type="xsd:string"/>
+                    <element name="name"  type="xsd:string"/>
+                    <element name="type"  type="tns:FeedLayoutFilterType"/>
                 </sequence>
             </complexType>
 
@@ -1289,8 +1523,23 @@ All Rights Reserved
                     <enumeration value="Canvas"/>
                     <enumeration value="CustomLink"/>
 
+
+                    <enumeration value="AnalyticsCloud"/>
+
                 </restriction>
             </simpleType>
+
+
+            <complexType name="FieldComponent">
+                <complexContent>
+                    <extension base="tns:DescribeLayoutComponent">
+                        <sequence>
+                            <element name="field"              type="tns:Field"/>
+                        </sequence>
+                    </extension>
+                </complexContent>
+            </complexType>
+
 
 
             <complexType name="FieldLayoutComponent">
@@ -1319,6 +1568,22 @@ All Rights Reserved
                     </extension>
                 </complexContent>
             </complexType>
+
+            <complexType name="AnalyticsCloudComponent">
+                <complexContent>
+                    <extension base="tns:DescribeLayoutComponent">
+                        <sequence>
+                            <element name="error"                  type="xsd:string"/>
+                            <element name="filter"                 type="xsd:string"/>
+                            <element name="height"                 type="xsd:string"/>
+                            <element name="hideOnError"            type="xsd:boolean"/>
+                            <element name="showTitle"              type="xsd:boolean"/>
+                            <element name="width"                  type="xsd:string"/>
+                        </sequence>
+                    </extension>
+                </complexContent>
+            </complexType>
+
 
             <complexType name="CustomLinkComponent">
                 <complexContent>
@@ -1531,13 +1796,13 @@ All Rights Reserved
             </complexType>
 
             <complexType name="DescribeSoqlListViewsRequest">
-                <sequence>                
+                <sequence>
                     <element name="listViewParams"      type="tns:DescribeSoqlListViewParams" maxOccurs="unbounded"/>
                 </sequence>
             </complexType>
-            
+
             <complexType name="DescribeSoqlListViewParams">
-                <sequence>                
+                <sequence>
                     <element name="developerNameOrId"        type="xsd:string"/>
                     <element name="sobjectType"              type="xsd:string" nillable="true"/>
                 </sequence>
@@ -1614,18 +1879,18 @@ All Rights Reserved
                     <enumeration value="within"/>
                 </restriction>
             </simpleType>
-            
+
             <simpleType name="soqlConjunction">
                 <restriction base="xsd:string">
                     <enumeration value="and"/>
                     <enumeration value="or"/>
                 </restriction>
             </simpleType>
-            
+
             <complexType name="SoqlWhereCondition">
                 <sequence/>
             </complexType>
-            
+
             <complexType name="SoqlCondition">
                 <complexContent>
                     <extension base="tns:SoqlWhereCondition">
@@ -1637,7 +1902,7 @@ All Rights Reserved
                     </extension>
                 </complexContent>
             </complexType>
-            
+
             <complexType name="SoqlNotCondition">
                 <complexContent>
                     <extension base="tns:SoqlWhereCondition">
@@ -1647,7 +1912,7 @@ All Rights Reserved
                     </extension>
                 </complexContent>
             </complexType>
-            
+
             <complexType name="SoqlConditionGroup">
                 <complexContent>
                     <extension base="tns:SoqlWhereCondition">
@@ -1658,7 +1923,7 @@ All Rights Reserved
                     </extension>
                 </complexContent>
             </complexType>
-            
+
             <complexType name="SoqlSubQueryCondition">
                 <complexContent>
                     <extension base="tns:SoqlWhereCondition">
@@ -1711,6 +1976,7 @@ All Rights Reserved
                     <element name="logoUrl"         type="xsd:string" />
                     <element name="namespace"       type="xsd:string" minOccurs="0"/>
                     <element name="selected"        type="xsd:boolean" />
+                    <element name="tabSetId" type="xsd:string" />
                     <element name="tabs"            type="tns:DescribeTab" minOccurs="0" maxOccurs="unbounded"/>
                 </sequence>
             </complexType>
@@ -1750,14 +2016,14 @@ All Rights Reserved
             </sequence>
         </complexType>
 
-		<complexType name="ActionOverride">
-			<sequence>
-				<element name="isAvailableInTouch" type="xsd:boolean"/>
-				<element name="name" type="xsd:string"/>
-				<element name="pageId" type="tns:ID"/>
-				<element name="url" type="xsd:string"/>
-			</sequence>
-		</complexType>
+        <complexType name="ActionOverride">
+            <sequence>
+                <element name="isAvailableInTouch" type="xsd:boolean"/>
+                <element name="name" type="xsd:string"/>
+                <element name="pageId" type="tns:ID"/>
+                <element name="url" type="xsd:string"/>
+            </sequence>
+        </complexType>
 
 
 
@@ -1902,6 +2168,7 @@ All Rights Reserved
                     </sequence>
                 </complexType>
             </element>
+
 
 
 
@@ -2063,6 +2330,34 @@ All Rights Reserved
             </element>
 
 
+            <simpleType name="listViewIsSoqlCompatible">
+                <restriction base="xsd:string">
+                    <enumeration value="TRUE"/>
+                    <enumeration value="FALSE"/>
+                    <enumeration value="ALL"/>
+                </restriction>
+            </simpleType>
+
+            <element name="describeSObjectListViews">
+                <complexType>
+                    <sequence>
+                        <element name="sObjectType" type="xsd:string"/>
+                        <element name="recentsOnly" type="xsd:boolean"/>
+                        <element name="isSoqlCompatible" type="tns:listViewIsSoqlCompatible"/>
+                        <element name="limit" type="xsd:int"/>
+                        <element name="offset" type="xsd:int"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="describeSObjectListViewsResponse">
+                <complexType>
+                    <sequence>
+                        <element name="result" type="tns:DescribeSoqlListViewResult"/>
+                    </sequence>
+                </complexType>
+            </element>
+
+
             <element name="describeSearchLayouts">
                 <complexType>
                     <sequence>
@@ -2117,6 +2412,24 @@ All Rights Reserved
                 <complexType>
                     <sequence>
                         <element name="result" type="tns:DescribeTab" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+                    </sequence>
+                </complexType>
+            </element>
+
+
+            <element name="describeNouns">
+                <complexType>
+                    <sequence>
+                        <element name="nouns" type="xsd:string" minOccurs='0' maxOccurs='100' />
+                        <element name="onlyRenamed" type="xsd:boolean"/>
+                        <element name="includeFields" type="xsd:boolean"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="describeNounsResponse">
+                <complexType>
+                    <sequence>
+                        <element name="result" type="tns:DescribeNounResult" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
                     </sequence>
                 </complexType>
             </element>
@@ -2694,6 +3007,16 @@ All Rights Reserved
 
 
 
+        <element name="DuplicateRuleHeader">
+            <complexType>
+                <sequence>
+                    <element name="allowSave" type="xsd:boolean" />
+                    <element name="includeRecordDetails" type="xsd:boolean" />
+                    <element name="runAsCurrentUser" type="xsd:boolean" />
+                </sequence>
+            </complexType>
+        </element>
+
 
 
         <complexType name="LimitInfo">
@@ -2711,6 +3034,7 @@ All Rights Reserved
                 </sequence>
             </complexType>
         </element>
+
 
 
 
@@ -2761,17 +3085,19 @@ All Rights Reserved
                     <sequence>
                         <element name="language"  type="xsd:string" minOccurs="0"/>
 
-                    	<element name="localizeErrors" type="xsd:boolean" minOccurs="0"/>
+                        <element name="localizeErrors" type="xsd:boolean" minOccurs="0"/>
 
                     </sequence>
                 </complexType>
-            </element>
+            </element>            
 
+                
         <element name="OwnerChangeOptions">
             <complexType>
                 <sequence>
-                    <element name="transferAttachments" type="xsd:boolean"/>
-                    <element name="transferOpenActivities" type="xsd:boolean"/>
+                
+                    <element name="transferAttachments" type="xsd:boolean"  />
+                    <element name="transferOpenActivities" type="xsd:boolean"  />
                 </sequence>
             </complexType>
         </element>
@@ -2788,6 +3114,8 @@ All Rights Reserved
                     <enumeration value="ARGUMENT_OBJECT_PARSE_ERROR"/>
                     <enumeration value="ASYNC_OPERATION_LOCATOR"/>
                     <enumeration value="BATCH_PROCESSING_HALTED"/>
+                    <enumeration value="BIG_OBJECT_UNSUPPORTED_OPERATION"/>
+                    <enumeration value="CANNOT_DELETE_ENTITY"/>
                     <enumeration value="CANNOT_DELETE_OWNER"/>
                     <enumeration value="CANT_ADD_STANDADRD_PORTAL_USER_TO_TERRITORY"/>
                     <enumeration value="CANT_ADD_STANDARD_PORTAL_USER_TO_TERRITORY"/>
@@ -2804,6 +3132,7 @@ All Rights Reserved
                     <enumeration value="CONTENT_HUB_TIMEOUT_EXCEPTION"/>
                     <enumeration value="CONTENT_HUB_UNEXPECTED_EXCEPTION"/>
                     <enumeration value="CUSTOM_METADATA_LIMIT_EXCEEDED"/>
+                    <enumeration value="CUSTOM_SETTINGS_LIMIT_EXCEEDED"/>
                     <enumeration value="DATACLOUD_API_CLIENT_EXCEPTION"/>
                     <enumeration value="DATACLOUD_API_DISABLED_EXCEPTION"/>
                     <enumeration value="DATACLOUD_API_SERVER_BUSY_EXCEPTION"/>
@@ -2871,6 +3200,7 @@ All Rights Reserved
                     <enumeration value="JIGSAW_IMPORT_LIMIT_EXCEEDED"/>
                     <enumeration value="JIGSAW_REQUEST_NOT_SUPPORTED"/>
                     <enumeration value="JSON_PARSER_ERROR"/>
+                    <enumeration value="KEY_HAS_BEEN_DESTROYED"/>
                     <enumeration value="LICENSING_UNKNOWN_ERROR"/>
                     <enumeration value="LIMIT_EXCEEDED"/>
                     <enumeration value="LOGIN_CHALLENGE_ISSUED"/>
@@ -2884,6 +3214,7 @@ All Rights Reserved
                     <enumeration value="MISSING_ARGUMENT"/>
                     <enumeration value="MISSING_RECORD"/>
                     <enumeration value="MUTUAL_AUTHENTICATION_FAILED"/>
+                    <enumeration value="NOT_ACCEPTABLE"/>
                     <enumeration value="NOT_MODIFIED"/>
                     <enumeration value="NO_SOFTPHONE_LAYOUT"/>
                     <enumeration value="NUMBER_OUTSIDE_VALID_RANGE"/>
@@ -2906,10 +3237,14 @@ All Rights Reserved
                     <enumeration value="SOCIALCRM_FEEDSERVICE_API_SERVER_EXCEPTION"/>
                     <enumeration value="SOCIALCRM_FEEDSERVICE_API_UNAVAILABLE"/>
                     <enumeration value="SSO_SERVICE_DOWN"/>
+                    <enumeration value="SST_ADMIN_FILE_DOWNLOAD_EXCEPTION"/>
                     <enumeration value="TOO_MANY_APEX_REQUESTS"/>
                     <enumeration value="TOO_MANY_RECIPIENTS"/>
                     <enumeration value="TOO_MANY_RECORDS"/>
                     <enumeration value="TRIAL_EXPIRED"/>
+                    <enumeration value="TXN_SECURITY_END_A_SESSION"/>
+                    <enumeration value="TXN_SECURITY_NO_ACCESS"/>
+                    <enumeration value="TXN_SECURITY_TWO_FA_REQUIRED"/>
                     <enumeration value="UNABLE_TO_LOCK_ROW"/>
                     <enumeration value="UNKNOWN_ATTACHMENT_EXCEPTION"/>
                     <enumeration value="UNKNOWN_EXCEPTION"/>
@@ -2929,6 +3264,8 @@ All Rights Reserved
                     <enumeration value="fns:ARGUMENT_OBJECT_PARSE_ERROR"/>
                     <enumeration value="fns:ASYNC_OPERATION_LOCATOR"/>
                     <enumeration value="fns:BATCH_PROCESSING_HALTED"/>
+                    <enumeration value="fns:BIG_OBJECT_UNSUPPORTED_OPERATION"/>
+                    <enumeration value="fns:CANNOT_DELETE_ENTITY"/>
                     <enumeration value="fns:CANNOT_DELETE_OWNER"/>
                     <enumeration value="fns:CANT_ADD_STANDADRD_PORTAL_USER_TO_TERRITORY"/>
                     <enumeration value="fns:CANT_ADD_STANDARD_PORTAL_USER_TO_TERRITORY"/>
@@ -2945,6 +3282,7 @@ All Rights Reserved
                     <enumeration value="fns:CONTENT_HUB_TIMEOUT_EXCEPTION"/>
                     <enumeration value="fns:CONTENT_HUB_UNEXPECTED_EXCEPTION"/>
                     <enumeration value="fns:CUSTOM_METADATA_LIMIT_EXCEEDED"/>
+                    <enumeration value="fns:CUSTOM_SETTINGS_LIMIT_EXCEEDED"/>
                     <enumeration value="fns:DATACLOUD_API_CLIENT_EXCEPTION"/>
                     <enumeration value="fns:DATACLOUD_API_DISABLED_EXCEPTION"/>
                     <enumeration value="fns:DATACLOUD_API_SERVER_BUSY_EXCEPTION"/>
@@ -3012,6 +3350,7 @@ All Rights Reserved
                     <enumeration value="fns:JIGSAW_IMPORT_LIMIT_EXCEEDED"/>
                     <enumeration value="fns:JIGSAW_REQUEST_NOT_SUPPORTED"/>
                     <enumeration value="fns:JSON_PARSER_ERROR"/>
+                    <enumeration value="fns:KEY_HAS_BEEN_DESTROYED"/>
                     <enumeration value="fns:LICENSING_UNKNOWN_ERROR"/>
                     <enumeration value="fns:LIMIT_EXCEEDED"/>
                     <enumeration value="fns:LOGIN_CHALLENGE_ISSUED"/>
@@ -3025,6 +3364,7 @@ All Rights Reserved
                     <enumeration value="fns:MISSING_ARGUMENT"/>
                     <enumeration value="fns:MISSING_RECORD"/>
                     <enumeration value="fns:MUTUAL_AUTHENTICATION_FAILED"/>
+                    <enumeration value="fns:NOT_ACCEPTABLE"/>
                     <enumeration value="fns:NOT_MODIFIED"/>
                     <enumeration value="fns:NO_SOFTPHONE_LAYOUT"/>
                     <enumeration value="fns:NUMBER_OUTSIDE_VALID_RANGE"/>
@@ -3047,10 +3387,14 @@ All Rights Reserved
                     <enumeration value="fns:SOCIALCRM_FEEDSERVICE_API_SERVER_EXCEPTION"/>
                     <enumeration value="fns:SOCIALCRM_FEEDSERVICE_API_UNAVAILABLE"/>
                     <enumeration value="fns:SSO_SERVICE_DOWN"/>
+                    <enumeration value="fns:SST_ADMIN_FILE_DOWNLOAD_EXCEPTION"/>
                     <enumeration value="fns:TOO_MANY_APEX_REQUESTS"/>
                     <enumeration value="fns:TOO_MANY_RECIPIENTS"/>
                     <enumeration value="fns:TOO_MANY_RECORDS"/>
                     <enumeration value="fns:TRIAL_EXPIRED"/>
+                    <enumeration value="fns:TXN_SECURITY_END_A_SESSION"/>
+                    <enumeration value="fns:TXN_SECURITY_NO_ACCESS"/>
+                    <enumeration value="fns:TXN_SECURITY_TWO_FA_REQUIRED"/>
                     <enumeration value="fns:UNABLE_TO_LOCK_ROW"/>
                     <enumeration value="fns:UNKNOWN_ATTACHMENT_EXCEPTION"/>
                     <enumeration value="fns:UNKNOWN_EXCEPTION"/>
@@ -3164,6 +3508,11 @@ All Rights Reserved
         <part element="tns:AllowFieldTruncationHeader"   name="AllowFieldTruncationHeader"/>
 
         <part element="tns:AllOrNoneHeader"              name="AllOrNoneHeader"/>
+
+
+
+
+        <part element="tns:DuplicateRuleHeader"          name="DuplicateRuleHeader"/>
 
 
 
@@ -3356,6 +3705,13 @@ All Rights Reserved
     </message>
     <message name="executeListViewResponse">
         <part element="tns:executeListViewResponse" name="parameters"/>
+    </message>
+
+    <message name="describeSObjectListViewsRequest">
+        <part element="tns:describeSObjectListViews" name="parameters"/>
+    </message>
+    <message name="describeSObjectListViewsResponse">
+        <part element="tns:describeSObjectListViewsResponse" name="parameters"/>
     </message>
 
     <message name="describeTabsRequest">
@@ -3575,6 +3931,13 @@ All Rights Reserved
         <part element="tns:retrieveQuickActionTemplatesResponse" name="parameters"/>
     </message>
 
+    <message name="describeNounsRequest">
+        <part element="tns:describeNouns" name="parameters"/>
+    </message>
+    <message name="describeNounsResponse">
+        <part element="tns:describeNounsResponse" name="parameters"/>
+    </message>
+
 
 
     <!-- Soap PortType -->
@@ -3717,6 +4080,14 @@ All Rights Reserved
             <documentation>Execute the specified list view and return the presentation-ready results.</documentation>
             <input  message="tns:executeListViewRequest"/>
             <output message="tns:executeListViewResponse"/>
+        </operation>
+
+        <operation name="describeSObjectListViews">
+            <documentation>Describe the ListViews of a SObject as SOQL metadata for the generation of SOQL.</documentation>
+            <input  message="tns:describeSObjectListViewsRequest"/>
+            <output message="tns:describeSObjectListViewsResponse"/>
+            <fault  message="tns:InvalidSObjectFault" name="InvalidSObjectFault"/>
+            <fault  message="tns:UnexpectedErrorFault" name="UnexpectedErrorFault"/>
         </operation>
 
         <operation name="describeTabs">
@@ -3967,6 +4338,12 @@ All Rights Reserved
             <documentation>Retreive the template sobjects, if appropriate, for the given quick action names in a given context</documentation>
             <input  message="tns:retrieveQuickActionTemplatesRequest"/>
             <output message="tns:retrieveQuickActionTemplatesResponse"/>
+        </operation>
+
+        <operation name="describeNouns">
+            <documentation>Return the renameable nouns from the server for use in presentation using the salesforce grammar engine</documentation>
+            <input  message="tns:describeNounsRequest"/>
+            <output message="tns:describeNounsResponse"/>
         </operation>
 
     </portType>
@@ -4302,6 +4679,25 @@ All Rights Reserved
                 <soap:body use="literal"/>
             </output>
         </operation>
+        <operation name="describeSObjectListViews">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:header use="literal" message="tns:Header" part="SessionHeader"/>
+                <soap:header use="literal" message="tns:Header" part="CallOptions"/>
+                <soap:header use="literal" message="tns:Header" part="PackageVersionHeader"/>
+                <soap:body parts="parameters" use="literal"/>
+            </input>
+            <output>
+                <soap:header use="literal" message="tns:Header" part="LimitInfoHeader"/>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="InvalidSObjectFault">
+                <soap:fault name="InvalidSObjectFault" use="literal"/>
+            </fault>
+            <fault name="UnexpectedErrorFault">
+                <soap:fault name="UnexpectedErrorFault" use="literal"/>
+            </fault>
+        </operation>
         <operation name="describeTabs">
             <soap:operation soapAction=""/>
             <input>
@@ -4358,6 +4754,7 @@ All Rights Reserved
                 <soap:header use="literal" message="tns:Header" part="DisableFeedTrackingHeader"/>
                 <soap:header use="literal" message="tns:Header" part="StreamingEnabledHeader"/>
                 <soap:header use="literal" message="tns:Header" part="AllOrNoneHeader"/>
+                <soap:header use="literal" message="tns:Header" part="DuplicateRuleHeader"/>
                 <soap:header use="literal" message="tns:Header" part="LocaleOptions"/>
                 <soap:header use="literal" message="tns:Header" part="DebuggingHeader"/>
                 <soap:header use="literal" message="tns:Header" part="PackageVersionHeader"/>
@@ -4393,6 +4790,7 @@ All Rights Reserved
                 <soap:header use="literal" message="tns:Header" part="DisableFeedTrackingHeader"/>
                 <soap:header use="literal" message="tns:Header" part="StreamingEnabledHeader"/>
                 <soap:header use="literal" message="tns:Header" part="AllOrNoneHeader"/>
+                <soap:header use="literal" message="tns:Header" part="DuplicateRuleHeader"/>
                 <soap:header use="literal" message="tns:Header" part="LocaleOptions"/>
                 <soap:header use="literal" message="tns:Header" part="DebuggingHeader"/>
                 <soap:header use="literal" message="tns:Header" part="PackageVersionHeader"/>
@@ -4429,6 +4827,7 @@ All Rights Reserved
                 <soap:header use="literal" message="tns:Header" part="DisableFeedTrackingHeader"/>
                 <soap:header use="literal" message="tns:Header" part="StreamingEnabledHeader"/>
                 <soap:header use="literal" message="tns:Header" part="AllOrNoneHeader"/>
+                <soap:header use="literal" message="tns:Header" part="DuplicateRuleHeader"/>
                 <soap:header use="literal" message="tns:Header" part="LocaleOptions"/>
                 <soap:header use="literal" message="tns:Header" part="DebuggingHeader"/>
                 <soap:header use="literal" message="tns:Header" part="PackageVersionHeader"/>
@@ -4464,6 +4863,7 @@ All Rights Reserved
                 <soap:header use="literal" message="tns:Header" part="AllowFieldTruncationHeader"/>
                 <soap:header use="literal" message="tns:Header" part="DisableFeedTrackingHeader"/>
                 <soap:header use="literal" message="tns:Header" part="StreamingEnabledHeader"/>
+                <soap:header use="literal" message="tns:Header" part="DuplicateRuleHeader"/>
                 <soap:header use="literal" message="tns:Header" part="LocaleOptions"/>
                 <soap:header use="literal" message="tns:Header" part="DebuggingHeader"/>
                 <soap:header use="literal" message="tns:Header" part="PackageVersionHeader"/>
@@ -4500,6 +4900,7 @@ All Rights Reserved
                 <soap:header use="literal" message="tns:Header" part="DisableFeedTrackingHeader"/>
                 <soap:header use="literal" message="tns:Header" part="StreamingEnabledHeader"/>
                 <soap:header use="literal" message="tns:Header" part="AllOrNoneHeader"/>
+                <soap:header use="literal" message="tns:Header" part="DuplicateRuleHeader"/>
                 <soap:header use="literal" message="tns:Header" part="LocaleOptions"/>
                 <soap:header use="literal" message="tns:Header" part="DebuggingHeader"/>
                 <soap:body parts="parameters" use="literal"/>
@@ -4522,6 +4923,7 @@ All Rights Reserved
                 <soap:header use="literal" message="tns:Header" part="DisableFeedTrackingHeader"/>
                 <soap:header use="literal" message="tns:Header" part="StreamingEnabledHeader"/>
                 <soap:header use="literal" message="tns:Header" part="AllOrNoneHeader"/>
+                <soap:header use="literal" message="tns:Header" part="DuplicateRuleHeader"/>
                 <soap:header use="literal" message="tns:Header" part="LocaleOptions"/>
                 <soap:header use="literal" message="tns:Header" part="DebuggingHeader"/>
                 <soap:header use="literal" message="tns:Header" part="PackageVersionHeader"/>
@@ -4589,6 +4991,7 @@ All Rights Reserved
                 <soap:header use="literal" message="tns:Header" part="AllowFieldTruncationHeader"/>
                 <soap:header use="literal" message="tns:Header" part="DisableFeedTrackingHeader"/>
                 <soap:header use="literal" message="tns:Header" part="StreamingEnabledHeader"/>
+                <soap:header use="literal" message="tns:Header" part="DuplicateRuleHeader"/>
                 <soap:header use="literal" message="tns:Header" part="LocaleOptions"/>
                 <soap:header use="literal" message="tns:Header" part="DebuggingHeader"/>
                 <soap:header use="literal" message="tns:Header" part="PackageVersionHeader"/>
@@ -4614,6 +5017,7 @@ All Rights Reserved
                 <soap:header use="literal" message="tns:Header" part="AllowFieldTruncationHeader"/>
                 <soap:header use="literal" message="tns:Header" part="DisableFeedTrackingHeader"/>
                 <soap:header use="literal" message="tns:Header" part="StreamingEnabledHeader"/>
+                <soap:header use="literal" message="tns:Header" part="DuplicateRuleHeader"/>
                 <soap:header use="literal" message="tns:Header" part="LocaleOptions"/>
                 <soap:header use="literal" message="tns:Header" part="DebuggingHeader"/>
                 <soap:header use="literal" message="tns:Header" part="PackageVersionHeader"/>
@@ -4919,6 +5323,7 @@ All Rights Reserved
                 <soap:header use="literal" message="tns:Header" part="DisableFeedTrackingHeader"/>
                 <soap:header use="literal" message="tns:Header" part="StreamingEnabledHeader"/>
                 <soap:header use="literal" message="tns:Header" part="AllOrNoneHeader"/>
+                <soap:header use="literal" message="tns:Header" part="DuplicateRuleHeader"/>
                 <soap:header use="literal" message="tns:Header" part="LocaleOptions"/>
                 <soap:header use="literal" message="tns:Header" part="DebuggingHeader"/>
                 <soap:header use="literal" message="tns:Header" part="PackageVersionHeader"/>
@@ -4973,6 +5378,20 @@ All Rights Reserved
                 <soap:body use="literal"/>
             </output>
         </operation>
+        <operation name="describeNouns">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:header use="literal" message="tns:Header" part="SessionHeader"/>
+                <soap:header use="literal" message="tns:Header" part="CallOptions"/>
+                <soap:header use="literal" message="tns:Header" part="PackageVersionHeader"/>
+                <soap:header use="literal" message="tns:Header" part="LocaleOptions"/>
+                <soap:body parts="parameters" use="literal"/>
+            </input>
+            <output>
+                <soap:header use="literal" message="tns:Header" part="LimitInfoHeader"/>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
 
     </binding>
 
@@ -4980,7 +5399,7 @@ All Rights Reserved
     <service name="SforceService">
         <documentation>Sforce SOAP API</documentation>
         <port binding="tns:SoapBinding" name="Soap">
-            <soap:address location="https://login.salesforce.com/services/Soap/u/32.0"/>
+            <soap:address location="https://login.salesforce.com/services/Soap/u/34.0"/>
         </port>
     </service>
 </definitions>

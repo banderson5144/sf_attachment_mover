@@ -9,6 +9,12 @@ var qFile = require('./questions.js')
 
 var url = 'partner.xml'; //Partner WSDL from Salesforce
 var sfSoapClient;
+var soapOptions = {
+     ignoredNamespaces: {
+       namespaces: ['namespaceToIgnore', 'someOtherNamespace'],
+       override: true
+     }
+   }
 
 var prodBoxUrl = 'https://login.salesforce.com/services/Soap/u/32.0';
 var sandBoxUrl = 'https://test.salesforce.com/services/Soap/u/32.0';
@@ -160,7 +166,7 @@ function srcOrg()
 
 function createSFClient()
 {
-  soap.createClient(url,
+  soap.createClient(url,soapOptions,
   function(err, client)
   {
     sfSoapClient = client;
@@ -420,6 +426,7 @@ function retAttFromSF(client,sObjIds)
 	client.SforceService.Soap.retrieve(retArgs,
 	function(err,res)
 	{
+		console.log(client.lastRequest);
 		var recs = [];
 
 		for(i=0;i<res.result.length;i++)
