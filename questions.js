@@ -9,13 +9,13 @@ var trgtQs = [
     type: "input",
     name: "trgtun",
     message: "Target Username",
-    default: "bryan@mydevbox.com"
+    default: "username@domain.com"
   },
   {
     type: "password",
     name: "trgtpw",
     message: "Target password (security token if necessary)",
-    default: "!Th1s1sas3cr3t!"
+    default: "P@ssw0rd+Token"
   }
 ];
 

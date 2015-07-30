@@ -426,7 +426,7 @@ function retAttFromSF(client,sObjIds)
 	client.SforceService.Soap.retrieve(retArgs,
 	function(err,res)
 	{
-		console.log(client.lastRequest);
+		//console.log(client.lastRequest);
 		var recs = [];
 
 		for(i=0;i<res.result.length;i++)
@@ -595,7 +595,7 @@ function createAttInTrgt(client,recs)
 	client.SforceService.Soap.create(recs,
 	function(err, response)
 	{
-    //console.log(client.lastRequest);
+		//console.log(client.lastRequest);
     /*fs.writeFile("lastReq.xml", client.lastRequest, function(err) {
       if(err) {
           console.log(err);
